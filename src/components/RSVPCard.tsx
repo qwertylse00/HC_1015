@@ -36,7 +36,9 @@ export default function RSVPCard({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    await onSubmit?.({ name: name.trim(), status, companions });
+    // 불참이면 동반 인원은 0명으로 보낸다.
+    if (status === "no") setCompanions(0);
+    await onSubmit?.({ name: name.trim(), status, companions: status === "yes" ? companions : 0 });
     setDone(true);
   }
 
